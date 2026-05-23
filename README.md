@@ -99,9 +99,19 @@ FastAPI servirá la interfaz de usuario de React y procesará la API en el puert
    ```
    *Acceso:* Abre tu navegador en **[http://localhost:8000](http://localhost:8000)**.
 
+---
 
+### ⚠️ Solución de Problemas en Windows (Execution Policy)
+Si al ejecutar comandos de npm (`npm run setup`, `npm start`) o entornos virtuales en PowerShell obtienes un error indicando que **"la ejecución de scripts está deshabilitada en este sistema"**:
+
+Esto se debe a las políticas de seguridad por defecto de Windows. Para solucionarlo, abre una terminal de **PowerShell** y ejecuta:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+Confirma el cambio escribiendo `S` (o `Y`) y presionando Enter. Esto habilitará la ejecución de scripts locales firmados para tu usuario sin comprometer la seguridad global del sistema.
 
 ---
+
 
 ## 🧪 Ejecución de Pruebas
 
