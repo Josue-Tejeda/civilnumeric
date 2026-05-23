@@ -45,13 +45,31 @@ La interfaz cuenta con un sofisticado tema **Tech Dark Mode** con efectos de *Gl
 
 Para ejecutar este proyecto de forma local, necesitas tener instalado:
 * **Python 3.10 o superior** (con pip)
-* **Node.js 18 o superior** (con npm, opcional, requerido solo para desarrollo frontend)
+* **Node.js 18 o superior** (el cual incluye **npm**).
+
+### 🛠️ Cómo instalar Node.js y npm:
+1. **Windows / macOS**:
+   * Ve a la página oficial de [nodejs.org](https://nodejs.org/).
+   * Descarga la versión **LTS (Long Term Support)** recomendada para la mayoría de los usuarios.
+   * Ejecuta el instalador descargado y sigue los pasos del asistente (asegúrate de marcar la opción para agregar Node al PATH, seleccionada por defecto).
+2. **Linux (Ubuntu/Debian)**:
+   ```bash
+   sudo apt update
+   sudo apt install nodejs npm
+   ```
+3. **Verificar la instalación**:
+   Abre una terminal/consola y ejecuta:
+   ```bash
+   node -v
+   npm -v
+   ```
+   *Deberías ver las versiones de Node y npm instaladas en tu terminal.*
 
 ---
 
 ## ⚙️ Pasos de Ejecución
 
-### 🛠️ Configuración Inicial (Primer uso)
+### 🚀 Configuración Inicial (Primer uso)
 Instala de manera automática todas las dependencias requeridas (tanto del frontend en Node como del backend en Python):
 
 1. **Instalar dependencias de Python (en la raíz)**:
@@ -59,7 +77,7 @@ Instala de manera automática todas las dependencias requeridas (tanto del front
    pip install -r requirements.txt
    ```
 
-2. **Instalar dependencias de Node (tanto raíz como frontend)**:
+2. **Instalar dependencias de Node**:
    Desde la raíz del proyecto, ejecuta:
    ```bash
    npm run setup
@@ -67,8 +85,8 @@ Instala de manera automática todas las dependencias requeridas (tanto del front
 
 ---
 
-### Opción A: Modo Producción Integrado (Un solo comando)
-En este modo, FastAPI sirve la interfaz de usuario React pre-compilada y procesa la API en el puerto `8000`. No requiere correr servidores de desarrollo.
+### 🖥️ Iniciar la Aplicación (Un solo comando)
+FastAPI servirá la interfaz de usuario de React y procesará la API en el puerto `8000`.
 
 1. **Compilar el frontend (si has hecho cambios)**:
    ```bash
@@ -81,16 +99,6 @@ En este modo, FastAPI sirve la interfaz de usuario React pre-compilada y procesa
    ```
    *Acceso:* Abre tu navegador en **[http://localhost:8000](http://localhost:8000)**.
 
----
-
-### Opción B: Modo Desarrollo Concurrente (Un solo comando)
-Si deseas modificar el código del backend o del frontend y ver las actualizaciones en tiempo real (*Hot-Reloading*), puedes correr ambos servidores simultáneamente con un solo comando:
-
-1. **Iniciar servidores de desarrollo en paralelo**:
-   ```bash
-   npm run dev
-   ```
-   *Acceso:* Abre tu navegador en la dirección del frontend **[http://localhost:5173](http://localhost:5173)**. Los cambios en los archivos se reflejarán instantáneamente en pantalla y la API procesará las llamadas en segundo plano de manera transparente.
 
 
 ---
