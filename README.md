@@ -69,8 +69,20 @@ Para ejecutar este proyecto de forma local, necesitas tener instalado:
 
 ## ⚙️ Pasos de Ejecución
 
-### 🚀 Configuración Inicial (Primer uso)
-Instala de manera automática todas las dependencias requeridas (tanto del frontend en Node como del backend en Python):
+### 🅰️ Opción A: Configuración Automática en Windows (Recomendada)
+Si estás en una máquina de Windows que solo tiene Python instalado y quieres configurar y arrancar todo en un solo paso:
+
+1. Abre una terminal de **PowerShell** en la carpeta raíz del proyecto.
+2. Ejecuta el script de instalación automática (este script descargará e instalará Node.js si no lo tienes, instalará dependencias de Python y Node, compilará la UI e iniciará la aplicación):
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File setup_windows.ps1
+   ```
+3. *Acceso:* Una vez que finalice la ejecución, abre tu navegador en **[http://localhost:8000](http://localhost:8000)**.
+
+---
+
+### 🅱️ Opción B: Configuración Manual paso a paso
+Si prefieres instalar las dependencias y realizar el build de manera manual:
 
 1. **Instalar dependencias de Python (en la raíz)**:
    ```bash
@@ -82,6 +94,7 @@ Instala de manera automática todas las dependencias requeridas (tanto del front
    ```bash
    npm run setup
    ```
+
 
 ---
 
