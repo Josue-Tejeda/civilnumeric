@@ -51,56 +51,47 @@ Para ejecutar este proyecto de forma local, necesitas tener instalado:
 
 ## ⚙️ Pasos de Ejecución
 
-### Opción A: Modo Producción Integrado (Recomendado)
-En este modo, el servidor de FastAPI ejecuta la API de cálculo y sirve de forma estática la aplicación React ya compilada bajo el puerto `8000`. No requiere correr Node.js.
+### 🛠️ Configuración Inicial (Primer uso)
+Instala de manera automática todas las dependencias requeridas (tanto del frontend en Node como del backend en Python):
 
-1. **Clonar el proyecto** e ingresar a la carpeta raíz:
-   ```bash
-   git clone <url-del-repositorio>
-   cd civilnumeric
-   ```
-
-2. **Instalar dependencias del Backend**:
+1. **Instalar dependencias de Python (en la raíz)**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Iniciar el servidor Uvicorn**:
+2. **Instalar dependencias de Node (tanto raíz como frontend)**:
+   Desde la raíz del proyecto, ejecuta:
    ```bash
-   python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+   npm run setup
    ```
-
-4. **Acceder a la aplicación**:
-   Abre tu navegador web e ingresa a **[http://localhost:8000](http://localhost:8000)**.
 
 ---
 
-### Opción B: Modo Desarrollo Separado (Para Modificaciones)
-Si deseas modificar el código de la UI en tiempo real con recarga en caliente (*Hot-Reloading*):
+### Opción A: Modo Producción Integrado (Un solo comando)
+En este modo, FastAPI sirve la interfaz de usuario React pre-compilada y procesa la API en el puerto `8000`. No requiere correr servidores de desarrollo.
 
-1. **Iniciar el Backend de FastAPI**:
+1. **Compilar el frontend (si has hecho cambios)**:
    ```bash
-   # En la raíz del proyecto
-   python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
-   ```
-
-2. **Configurar e iniciar el Servidor de Desarrollo Frontend**:
-   Abre una **nueva terminal** y ejecuta:
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-3. **Acceder al entorno de desarrollo**:
-   El servidor frontend de Vite se ejecutará en **[http://localhost:5173](http://localhost:5173)** y se conectará automáticamente a la API de FastAPI en el puerto `8000`.
-
-4. **Compilar para producción (si realizas cambios)**:
-   Si modificas el frontend y quieres actualizar la compilación servida en el puerto 8000:
-   ```bash
-   cd frontend
    npm run build
    ```
+
+2. **Iniciar la aplicación unificada**:
+   ```bash
+   npm start
+   ```
+   *Acceso:* Abre tu navegador en **[http://localhost:8000](http://localhost:8000)**.
+
+---
+
+### Opción B: Modo Desarrollo Concurrente (Un solo comando)
+Si deseas modificar el código del backend o del frontend y ver las actualizaciones en tiempo real (*Hot-Reloading*), puedes correr ambos servidores simultáneamente con un solo comando:
+
+1. **Iniciar servidores de desarrollo en paralelo**:
+   ```bash
+   npm run dev
+   ```
+   *Acceso:* Abre tu navegador en la dirección del frontend **[http://localhost:5173](http://localhost:5173)**. Los cambios en los archivos se reflejarán instantáneamente en pantalla y la API procesará las llamadas en segundo plano de manera transparente.
+
 
 ---
 

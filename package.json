@@ -1,0 +1,15 @@
+{
+  "name": "civilnumeric-workspace",
+  "version": "1.0.0",
+  "description": "Espacio de trabajo unificado para CivilNumeric",
+  "private": true,
+  "scripts": {
+    "setup": "npm install --prefix frontend && npm install",
+    "build": "npm run build --prefix frontend",
+    "start": "python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000",
+    "dev": "concurrently --kill-others \"npm run dev --prefix frontend\" \"python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
