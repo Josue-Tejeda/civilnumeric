@@ -1,4 +1,4 @@
-# setup_windows.ps1 - Instalación automatizada para CivilNumeric en Windows
+# setup_windows.ps1 - Instalacion automatizada para CivilNumeric en Windows
 # Este script prepara el entorno completo, instala Node.js/npm si faltan, compila e inicia el software.
 
 $ErrorActionPreference = "Stop"
@@ -12,9 +12,9 @@ Write-Host "`n[1/4] Instalando dependencias de Python..." -ForegroundColor Yello
 try {
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
-    Write-Host "✔ Dependencias de Python instaladas con éxito." -ForegroundColor Green
+    Write-Host "[OK] Dependencias de Python instaladas con exito." -ForegroundColor Green
 } catch {
-    Write-Host "❌ Error al instalar dependencias de Python. Asegúrate de que Python esté en el PATH." -ForegroundColor Red
+    Write-Host "[ERROR] Al instalar dependencias de Python. Asegurate de que Python este en el PATH." -ForegroundColor Red
     exit 1
 }
 
@@ -23,10 +23,10 @@ Write-Host "`n[2/4] Verificando entorno de Node.js/npm..." -ForegroundColor Yell
 $nodeInstalled = $false
 try {
     $nodeVersion = node -v
-    Write-Host "✔ Node.js ya está instalado en el sistema ($nodeVersion)." -ForegroundColor Green
+    Write-Host "[OK] Node.js ya esta instalado en el sistema ($nodeVersion)." -ForegroundColor Green
     $nodeInstalled = $true
 } catch {
-    Write-Host "ℹ Node.js no detectado. Iniciando instalación automatizada..." -ForegroundColor Cyan
+    Write-Host "[INFO] Node.js no detectado. Iniciando instalacion automatizada..." -ForegroundColor Cyan
 }
 
 if (-not $nodeInstalled) {
@@ -38,17 +38,18 @@ if (-not $nodeInstalled) {
     } catch {}
 
     if ($wingetInstalled) {
-        Write-Host "-> Instalando Node.js a través de Winget (silencioso)..." -ForegroundColor Cyan
+        Write-Host "-> Instalando Node.js a traves de Winget (silencioso)..." -ForegroundColor Cyan
         try {
             winget install --id OpenJS.NodeJS.LTS --source winget --accept-package-agreements --accept-source-agreements --silent
-            Write-Host "✔ Node.js instalado con Winget." -ForegroundColor Green
+            Write-Host "[OK] Node.js instalado con Winget." -ForegroundColor Green
+            $nodeInstalled = $true
         } catch {
-            Write-Host "⚠ Falló la instalación con Winget. Intentando descarga manual de instalador..." -ForegroundColor Yellow
+            Write-Host "[WARN] Fallo la instalacion con Winget. Intentando descarga manual..." -ForegroundColor Yellow
             $wingetInstalled = $false
         }
     }
 
-    if (-not $wingetInstalled) {
+    if (-not $nodeInstalled) {
         # Descargar MSI de Node.js oficial e instalar silenciosamente
         $msiUrl = "https://nodejs.org/dist/v20.12.2/node-v20.12.2-x64.msi"
         $msiPath = Join-Path $env:TEMP "node-install.msi"
@@ -56,30 +57,31 @@ if (-not $nodeInstalled) {
         Write-Host "-> Descargando instalador de Node.js oficial (LTS)..." -ForegroundColor Cyan
         Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath
         
-        Write-Host "-> Ejecutando instalador silencioso (solicitará permisos de Administrador)..." -ForegroundColor Cyan
+        Write-Host "-> Ejecutando instalador silencioso (solicitara permisos de Administrador)..." -ForegroundColor Cyan
         $process = Start-Process msiexec.exe -ArgumentList "/i `"$msiPath`" /qn /norestart" -Verb RunAs -Wait -PassThru
         
         if ($process.ExitCode -eq 0) {
-            Write-Host "✔ Node.js instalado con éxito desde el paquete oficial." -ForegroundColor Green
+            Write-Host "[OK] Node.js instalado con exito desde el paquete oficial." -ForegroundColor Green
+            $nodeInstalled = $true
         } else {
-            Write-Host "❌ Error al instalar Node.js. Intente descargar e instalar manualmente desde https://nodejs.org/" -ForegroundColor Red
+            Write-Host "[ERROR] Al instalar Node.js. Intente descargar e instalar manualmente desde https://nodejs.org/" -ForegroundColor Red
             exit 1
         }
     }
 
-    # Cargar Node.js en el PATH de la sesión actual de PowerShell para continuar sin reiniciar consola
-    $env:Path += ";$env:ProgramFiles\nodejs"
-    $env:Path += ";$env:APPDATA\npm"
+    # Cargar Node.js en el PATH de la sesion actual de PowerShell para continuar sin reiniciar consola
+    $env:Path += ";$($env:ProgramFiles)\nodejs"
+    $env:Path += ";$($env:APPDATA)\npm"
 }
 
 # 3. Configurar espacio de trabajo
 Write-Host "`n[3/4] Instalando dependencias del proyecto (npm)..." -ForegroundColor Yellow
 try {
-    # Ejecuta el setup del package.json de la raíz
+    # Ejecuta el setup del package.json de la raiz
     npm run setup
-    Write-Host "✔ Dependencias de Node instaladas con éxito." -ForegroundColor Green
+    Write-Host "[OK] Dependencias de Node instaladas con exito." -ForegroundColor Green
 } catch {
-    Write-Host "❌ Error al configurar dependencias de Node.js." -ForegroundColor Red
+    Write-Host "[ERROR] Al configurar dependencias de Node.js." -ForegroundColor Red
     exit 1
 }
 
@@ -87,9 +89,9 @@ try {
 Write-Host "`n[4/4] Compilando frontend en React..." -ForegroundColor Yellow
 try {
     npm run build
-    Write-Host "✔ Frontend compilado con éxito (estáticos en frontend/dist)." -ForegroundColor Green
+    Write-Host "[OK] Frontend compilado con exito (estaticos en frontend/dist)." -ForegroundColor Green
 } catch {
-    Write-Host "❌ Error al compilar el frontend React." -ForegroundColor Red
+    Write-Host "[ERROR] Al compilar el frontend React." -ForegroundColor Red
     exit 1
 }
 
@@ -97,6 +99,6 @@ try {
 Write-Host "`n=============================================" -ForegroundColor Green
 Write-Host "   ¡Entorno de CivilNumeric Configurado!     " -ForegroundColor Green
 Write-Host "=============================================" -ForegroundColor Green
-Write-Host "Iniciando la aplicación en http://localhost:8000 ..." -ForegroundColor Cyan
+Write-Host "Iniciando la aplicacion en http://localhost:8000 ..." -ForegroundColor Cyan
 
 npm start
